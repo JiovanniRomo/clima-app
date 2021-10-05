@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.leerInput = exports.pausa = exports.inquirerMenu = void 0;
+exports.listarLugares = exports.leerInput = exports.pausa = exports.inquirerMenu = void 0;
 const inquirer_1 = __importDefault(require("inquirer"));
 const colors_1 = __importDefault(require("colors"));
 const menuOpts = [
@@ -75,4 +75,29 @@ const leerInput = (message) => __awaiter(void 0, void 0, void 0, function* () {
     return desc;
 });
 exports.leerInput = leerInput;
+const listarLugares = (lugares) => __awaiter(void 0, void 0, void 0, function* () {
+    let choices = lugares.map((lugar, i) => {
+        const index = `${i + 1}`.green;
+        return {
+            value: lugar.id,
+            name: `${index} ${lugar.nombre}`,
+        };
+    });
+    const salirMenu = {
+        value: '0',
+        name: "0.".green + " Cancelar",
+    };
+    choices = [salirMenu, ...choices];
+    const preguntas = [
+        {
+            type: "list",
+            name: "id",
+            message: "Seleccione un lugar",
+            choices,
+        },
+    ];
+    const { id } = yield inquirer_1.default.prompt(preguntas);
+    return id;
+});
+exports.listarLugares = listarLugares;
 //# sourceMappingURL=inquirer.js.map

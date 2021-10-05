@@ -1,5 +1,6 @@
 import inquirer, { QuestionCollection } from 'inquirer';
 import colors from "colors";
+import { ArrLugares, choice } from '../types/ResponseArrLugares';
 
 const menuOpts: QuestionCollection = [
     {
@@ -67,36 +68,36 @@ export const leerInput = async (message: string) => {
     return desc;
 };
 
-// export const listadoTareasBorrar = async (tareas: Tarea[]) => {
-//     let choices = tareas.map((tarea, i) => {
-//         const index = `${i + 1}`.green;
+export const listarLugares = async (lugares: ArrLugares[]) => {
+    let choices = lugares.map((lugar, i) => {
+        const index = `${i + 1}`.green;
 
-//         return {
-//             value: tarea.id,
-//             name: `${index} ${tarea.desc}`,
-//         };
-//     });
+        return {
+            value: lugar.id,
+            name: `${index} ${lugar.nombre}`,
+        };
+    });
 
-//     const salirMenu = {
-//         value: "0",
-//         name: "0.".green + " Cancelar",
-//     };
+    const salirMenu: choice = {
+        value: '0',
+        name: "0.".green + " Cancelar",
+    };
 
-//     choices = [salirMenu, ...choices];
+    choices = [salirMenu, ...choices];
 
-//     const preguntas: QuestionCollection = [
-//         {
-//             type: "list",
-//             name: "id",
-//             message: "Borrar",
-//             choices,
-//         },
-//     ];
+    const preguntas: QuestionCollection = [
+        {
+            type: "list",
+            name: "id",
+            message: "Seleccione un lugar",
+            choices,
+        },
+    ];
 
-//     const { id } = await inquirer.prompt(preguntas);
+    const { id } = await inquirer.prompt(preguntas);
 
-//     return id;
-// };
+    return id;
+};
 
 // export const confirmar = async (message: string) => {
 //     const question: QuestionCollection = [

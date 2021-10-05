@@ -26,13 +26,22 @@ class Busquedas {
     }
     ciudad(lugar) {
         return __awaiter(this, void 0, void 0, function* () {
-            const instance = axios_1.default.create({
-                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
-                params: this.paramsMapbox
-            });
-            const respuesta = yield instance.get();
-            console.log(respuesta.data);
-            return [];
+            try {
+                const instance = axios_1.default.create({
+                    baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
+                    params: this.paramsMapbox
+                });
+                const resp = yield instance.get();
+                return resp.data.features.map(lugar => ({
+                    id: lugar.id,
+                    nombre: lugar.place_name,
+                    lng: lugar.center[0],
+                    lat: lugar.center[1],
+                }));
+            }
+            catch (error) {
+                return [];
+            }
         });
     }
 }

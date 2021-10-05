@@ -25,12 +25,16 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         switch (opt) {
             case 1:
                 console.log('buscar');
-                const lugar = yield (0, inquirer_1.leerInput)('Introduce una ciudad');
-                yield busquedas.ciudad(lugar);
+                const busqueda = yield (0, inquirer_1.leerInput)('Introduce una ciudad');
+                const lugares = yield busquedas.ciudad(busqueda);
+                const id = yield (0, inquirer_1.listarLugares)(lugares);
+                const lugarSel = lugares.find(lugar => lugar.id === id);
+                console.log({ id });
+                console.log(lugarSel);
                 console.log('\ninfo del lugar\n'.green);
-                console.log('Ciudad:');
-                console.log('Lt:');
-                console.log('Lg:');
+                console.log('Ciudad:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.nombre);
+                console.log('Lt:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lat);
+                console.log('Lg:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lng);
                 console.log('Temperatura min:');
                 console.log('Temperatura max:');
                 break;
