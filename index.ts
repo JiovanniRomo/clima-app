@@ -1,7 +1,11 @@
 import { inquirerMenu, leerInput, pausa } from "./helpers/inquirer"
 import Busquedas from "./models/Busquedas";
+import dotenv from 'dotenv';
+dotenv.config();
 
 console.clear();
+
+// console.log(process.env)
 
 const main = async () => {
     let opt: number; 

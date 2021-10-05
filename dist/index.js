@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = require("./helpers/inquirer");
 const Busquedas_1 = __importDefault(require("./models/Busquedas"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
 console.clear();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     let opt;
