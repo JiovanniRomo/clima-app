@@ -27,7 +27,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 const busqueda = yield (0, inquirer_1.leerInput)("Introduce una ciudad");
                 const lugares = yield busquedas.ciudad(busqueda);
                 const id = yield (0, inquirer_1.listarLugares)(lugares);
+                if (id === '0')
+                    continue;
                 const lugarSel = lugares.find((lugar) => lugar.id === id);
+                busquedas.agregarHistorial(lugarSel.nombre);
                 const clima = yield busquedas.climaPorLugar(lugarSel.lat, lugarSel.lng);
                 console.clear();
                 console.log("\ninfo del lugar\n".green);
@@ -40,7 +43,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
                 console.log("Estado del clima:", clima === null || clima === void 0 ? void 0 : clima.desc.green);
                 break;
             case 2:
-                console.log("historial");
+                busquedas.historialCapitalizado.forEach((lugar, i) => {
+                    const idx = `${i + 1}`.green;
+                    console.log(`${idx} ${lugar}`);
+                });
                 break;
         }
         if (opt !== 0)
