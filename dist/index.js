@@ -24,22 +24,23 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         opt = yield (0, inquirer_1.inquirerMenu)();
         switch (opt) {
             case 1:
-                console.log('buscar');
-                const busqueda = yield (0, inquirer_1.leerInput)('Introduce una ciudad');
+                const busqueda = yield (0, inquirer_1.leerInput)("Introduce una ciudad");
                 const lugares = yield busquedas.ciudad(busqueda);
                 const id = yield (0, inquirer_1.listarLugares)(lugares);
-                const lugarSel = lugares.find(lugar => lugar.id === id);
-                console.log({ id });
-                console.log(lugarSel);
-                console.log('\ninfo del lugar\n'.green);
-                console.log('Ciudad:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.nombre);
-                console.log('Lt:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lat);
-                console.log('Lg:', lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lng);
-                console.log('Temperatura min:');
-                console.log('Temperatura max:');
+                const lugarSel = lugares.find((lugar) => lugar.id === id);
+                const clima = yield busquedas.climaPorLugar(lugarSel.lat, lugarSel.lng);
+                console.clear();
+                console.log("\ninfo del lugar\n".green);
+                console.log("Ciudad:", lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.nombre.green);
+                console.log("Lt:", lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lat);
+                console.log("Lg:", lugarSel === null || lugarSel === void 0 ? void 0 : lugarSel.lng);
+                console.log("Temperatura:", clima === null || clima === void 0 ? void 0 : clima.temp);
+                console.log("Temperatura min:", clima === null || clima === void 0 ? void 0 : clima.min);
+                console.log("Temperatura max:", clima === null || clima === void 0 ? void 0 : clima.max);
+                console.log("Estado del clima:", clima === null || clima === void 0 ? void 0 : clima.desc.green);
                 break;
             case 2:
-                console.log('historial');
+                console.log("historial");
                 break;
         }
         if (opt !== 0)

@@ -19,9 +19,16 @@ class Busquedas {
     }
     get paramsMapbox() {
         return {
-            'access_token': process.env.MAPBOX_KEY,
-            'limit': 5,
-            'language': 'es'
+            access_token: process.env.MAPBOX_KEY,
+            limit: 5,
+            language: "es",
+        };
+    }
+    get paramsWeather() {
+        return {
+            appid: process.env.OPEN_WEATHER,
+            units: "metric",
+            lang: "es",
         };
     }
     ciudad(lugar) {
@@ -29,10 +36,10 @@ class Busquedas {
             try {
                 const instance = axios_1.default.create({
                     baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
-                    params: this.paramsMapbox
+                    params: this.paramsMapbox,
                 });
                 const resp = yield instance.get();
-                return resp.data.features.map(lugar => ({
+                return resp.data.features.map((lugar) => ({
                     id: lugar.id,
                     nombre: lugar.place_name,
                     lng: lugar.center[0],
@@ -43,6 +50,29 @@ class Busquedas {
                 return [];
             }
         });
+    }
+    climaPorLugar(lat, lon) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const instance = axios_1.default.create({
+                    baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+                    params: Object.assign({ lat, lon }, this.paramsWeather),
+                });
+                const resp = yield instance.get();
+                const { weather, main } = resp.data;
+                return {
+                    desc: weather[0].description,
+                    min: main.temp_min,
+                    max: main.temp_max,
+                    temp: main.temp,
+                };
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
+    agregarHistorial(lugar) {
     }
 }
 exports.default = Busquedas;
